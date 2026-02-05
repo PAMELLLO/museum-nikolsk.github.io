@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Никольский музейный комплекс (НИКМК) | Главная</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <h1>🏛️ Никольский музейный комплекс (НИКМК)</h1>
+                    <p>Пензенская область</p>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html" class="active">Главная</a></li>
+                        <li><a href="about.html">О музее</a></li>
+                        <li><a href="exhibitions.html">Выставки</a></li>
+                        <li><a href="collections.html">Коллекции</a></li>
+                        <li><a href="visit.html">Посетителям</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </nav>
+                <button class="menu-toggle">☰</button>
+            </div>
+
+            <div class="hero">
+                <div class="hero-content">
+                    <h2>История Никольска глазами предков</h2>
+                    <p>Уникальные экспонаты, рассказывающие о прошлом нашего родного края</p>
+                    <div class="hero-buttons">
+                        <a href="exhibitions.html" class="btn btn-primary">Текущие выставки</a>
+                        <a href="visit.html" class="btn btn-secondary">Планировать визит</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        <!-- Новости (динамический блок) -->
+        <section class="section" id="news-section">
+            <div class="container">
+                <h2 class="section-title">Новости музея</h2>
+                <div class="news-grid" id="news-container">
+                    <!-- Новости будут загружены здесь -->
+                    <div class="loading-message">Загрузка новостей...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Анонсы выставок -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Текущие выставки</h2>
+                <div class="exhibitions-grid">
+                    <div class="exhibition-card">
+                        <div class="exhibition-image">
+                            <img src="https://via.placeholder.com/400x300/4a6fa5/ffffff?text=История+Никольска"
+                                alt="История Никольска">
+                        </div>
+                        <div class="exhibition-info">
+                            <h3>История Никольска с древности</h3>
+                            <p class="exhibition-date">📅 до 15 марта 2026</p>
+                            <p>Разделы о первых поселениях, торговле, ремеслах в Пензенской области</p>
+                            <a href="exhibitions.html" class="btn-link">Подробнее →</a>
+                        </div>
+                    </div>
+
+                    <div class="exhibition-card">
+                        <div class="exhibition-image">
+                            <img src="https://via.placeholder.com/400x300/6b8e23/ffffff?text=Природа+Пензы"
+                                alt="Природа Пензенской области">
+                        </div>
+                        <div class="exhibition-info">
+                            <h3>Природа Пензенской области</h3>
+                            <p class="exhibition-date">📅 до 30 апреля 2026</p>
+                            <p>Флора и фауна региона, заповедники, уникальные места</p>
+                            <a href="exhibitions.html" class="btn-link">Подробнее →</a>
+                        </div>
+                    </div>
+
+                    <div class="exhibition-card">
+                        <div class="exhibition-image">
+                            <img src="https://via.placeholder.com/400x300/8b4513/ffffff?text=Народы+края"
+                                alt="Народы Пензенского края">
+                        </div>
+                        <div class="exhibition-info">
+                            <h3>Народы Пензенского края</h3>
+                            <p class="exhibition-date">📅 до 10 мая 2026</p>
+                            <p>Традиции, культура, быт народов, живущих в регионе</p>
+                            <a href="exhibitions.html" class="btn-link">Подробнее →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Информация для посетителей -->
+        <section class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">Планируете визит в Никольск?</h2>
+                <div class="visit-info">
+                    <div class="info-item">
+                        <div class="info-icon">🕒</div>
+                        <h3>Режим работы</h3>
+                        <p>Ср-Вс: 10:00 - 17:00</p>
+                        <p>Пн-Вт: выходной</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">💰</div>
+                        <h3>Стоимость билетов</h3>
+                        <p>Взрослые: 200 ₽</p>
+                        <p>Студенты: 100 ₽</p>
+                        <p>Дети до 16: бесплатно</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <h3>Адрес</h3>
+                        <p>Ульяновская ул., 6Б</p>
+                        <p>г. Никольск, Пензенская обл.</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="visit.html" class="btn btn-primary">Подробнее о посещении</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- О городе Никольск -->
+        <section class="section" id="location-section">
+            <div class="container">
+                <h2 class="section-title">Как нас найти</h2>
+                <div class="city-info">
+                    <div class="city-description">
+                        <p><strong>Никольский музейный комплекс (НИКМК)</strong> расположен в центре города Никольск на
+                            Ульяновской улице, 6Б.</p>
+
+                        <p>Музей находится в исторической части города, недалеко от железнодорожной станции. Здание
+                            музея легко узнать по характерной архитектуре и вывеске.</p>
+
+                        <p>Рядом с музеем расположены остановки общественного транспорта, парковка для автомобилей и
+                            велосипедные стойки.</p>
+                    </div>
+                    <div class="city-map"
+                        style="position: relative; overflow: hidden; border-radius: 10px; box-shadow: var(--shadow);">
+                        <!-- Яндекс Карта с меткой музея -->
+                        <div id="map" style="width: 100%; height: 400px; background: #e0e0e0;"></div>
+                        <script type="text/javascript" charset="utf-8" async
+                            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0dd916c8a4ef44d6e717988567196bc8cb151cd68805d6b2f8d9a3f9fb2c0247&amp;width=100%&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>🏛️ Никольский музейный комплекс (НИКМК)</h3>
+                    <p>Сохраняем историю Пензенского края для будущих поколений</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <p>📞 +7 (84145) 2-12-34</p>
+                    <p>📧 info@museum-nikolsk.ru</p>
+                    <p>📍 Ульяновская ул., 6Б, г. Никольск, Пензенская обл.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Соцсети</h4>
+                    <div class="social-links">
+                        <a href="https://vk.com/public135165206">VK</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Никольский музейный комплекс (НИКМК). Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для загрузки новостей из Google Sheets
+        async function loadNews() {
+            try {
+                // ЗАМЕНИТЕ ЭТУ ССЫЛКУ НА ВАШУ ОПУБЛИКОВАННУЮ ТАБЛИЦУ
+                const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/export?format=csv';
+
+                const response = await fetch(spreadsheetUrl);
+                const text = await response.text();
+
+                // Парсим CSV
+                const news = parseCSV(text);
+
+                // Отображаем новости
+                displayNews(news);
+            } catch (error) {
+                console.error('Ошибка загрузки новостей:', error);
+                document.getElementById('news-container').innerHTML =
+                    '<div class="error-message">Не удалось загрузить новости. Проверьте подключение к интернету.</div>';
+            }
+        }
+
+        // Функция для парсинга CSV
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',');
+            const result = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const currentLine = lines[i].split(',');
+                const obj = {};
+
+                for (let j = 0; j < headers.length && j < currentLine.length; j++) {
+                    obj[headers[j].trim()] = currentLine[j].trim();
+                }
+
+                // Только если есть заголовок новости
+                if (obj['Заголовок']) {
+                    result.push(obj);
+                }
+            }
+
+            return result;
+        }
+
+        // Функция для отображения новостей
+        function displayNews(news) {
+            const container = document.getElementById('news-container');
+
+            if (news.length === 0) {
+                container.innerHTML = '<div class="no-news-message">Новостей пока нет</div>';
+                return;
+            }
+
+            const newsHTML = news.map(item => {
+                // Преобразуем дату в нужный формат
+                let formattedDate = item['Дата'] || 'Дата не указана';
+
+                // Если дата в формате YYYY-MM-DD, преобразуем в DD.MM.YYYY
+                if (formattedDate.includes('-')) {
+                    const dateParts = formattedDate.split('-');
+                    formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+                }
+
+                return `
+                    <div class="news-card">
+                        <div class="news-date">${formattedDate}</div>
+                        <h3>${item['Заголовок'] || 'Без заголовка'}</h3>
+                        <p>${item['Текст новости'] || ''}</p>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = newsHTML;
+        }
+
+        // Загружаем новости при загрузке страницы
+        document.addEventListener('DOMContentLoaded', loadNews);
+
+        // Обновляем новости каждые 5 минут (300000 мс)
+        setInterval(loadNews, 300000);
+    </script>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
