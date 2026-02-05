@@ -137,7 +137,7 @@ let slidesPerPage = 3; // сколько мини-новостей показы�
 async function loadNews() {
     try {
         // ЗАМЕНИТЕ ЭТУ ССЫЛКУ НА ВАШУ ОПУБЛИКОВАННУЮ ТАБЛИЦУ
-        const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/export?format=csv';
+        const spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/19MFPSy-RnJQstAQKus5RX4fKrctfZZWC8gM6C-oX1IQ/export?format=csv';
 
         const response = await fetch(spreadsheetUrl);
         const text = await response.text();
@@ -166,24 +166,58 @@ async function loadNews() {
 
 // Функция для парсинга CSV
 function parseCSV(csvText) {
-    const lines = csvText.trim().split('\n');
-    const headers = lines[0].split(',');
+    const lines = csvText.trim().split(/\r?\n/); // поддержка разных переводов строк
+    const headers = lines[0].split(',').map(h => h.trim());
     const result = [];
 
     for (let i = 1; i < lines.length; i++) {
-        const currentLine = lines[i].split(',');
+        if (!lines[i].trim()) continue; // пропускаем пустые строки
+
+        // Более умный парсер для CSV с кавычками
+        const row = parseCSVRow(lines[i]);
         const obj = {};
 
-        for (let j = 0; j < headers.length && j < currentLine.length; j++) {
-            obj[headers[j].trim()] = currentLine[j].trim();
+        for (let j = 0; j < headers.length && j < row.length; j++) {
+            obj[headers[j].trim()] = row[j].trim();
         }
 
         // Только если есть заголовок новости
-        if (obj['Заголовок']) {
+        if (obj['Заголовок'] && obj['Заголовок'].trim() !== '') {
             result.push(obj);
         }
     }
 
+    return result;
+}
+
+// Вспомогательная функция для правильного разбора CSV строки
+function parseCSVRow(row) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < row.length; i++) {
+        const char = row[i];
+
+        if (char === '"') {
+            if (inQuotes && i + 1 < row.length && row[i + 1] === '"') {
+                // Двойные кавычки внутри значения
+                current += '"';
+                i++; // пропускаем следующую кавычку
+            } else {
+                // Переключаем состояние кавычек
+                inQuotes = !inQuotes;
+            }
+        } else if (char === ',' && !inQuotes) {
+            // Разделитель вне кавычек
+            result.push(current);
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+
+    result.push(current);
     return result;
 }
 
@@ -200,8 +234,10 @@ function showMainSlide(index) {
 
     const imageUrl = news['Изображение (URL)'] || '';
 
-    // Ограничиваем текст для основного слайда
+    // Очищаем текст от потенциальных проблемных символов
     let fullText = news['Текст новости'] || '';
+    fullText = fullText.replace(/"/g, '').replace(/'/g, ''); // убираем кавычки
+
     let displayText = fullText;
 
     // Если текст слишком длинный, ограничиваем его
@@ -246,8 +282,11 @@ function renderCarousel() {
 
         const imageUrl = news['Изображение (URL)'] || '';
 
-        // Ограничиваем текст для мини-слайдов
+        // Очищаем текст
         let shortText = news['Текст новости'] || '';
+        shortText = shortText.replace(/"/g, '').replace(/'/g, '');
+
+        // Ограничиваем текст для мини-слайдов
         if (shortText.length > 100) {
             shortText = shortText.substring(0, 100) + '...';
         }
@@ -323,13 +362,16 @@ function toggleFullText(button) {
     const originalText = button.dataset.originalText;
 
     if (!button.dataset.originalText) {
-        // Сохраняем оригинальный текст
-        button.dataset.originalText = newsData[currentMainIndex]['Текст новости'] || '';
+        // Сохраняем оригинальный текст (очищенный)
+        let original = newsData[currentMainIndex]['Текст новости'] || '';
+        original = original.replace(/"/g, '').replace(/'/g, '');
+        button.dataset.originalText = original;
     }
 
     if (fullTextElement.textContent.endsWith('...')) {
         // Показываем полный текст
         fullTextElement.textContent = button.dataset.originalText;
+        fullTextElement.style.maxHeight = 'none'; // разрешаем полный рост
         button.textContent = 'Свернуть';
     } else {
         // Показываем сокращенный текст
@@ -338,6 +380,7 @@ function toggleFullText(button) {
             shortText = shortText.substring(0, 500) + '...';
         }
         fullTextElement.textContent = shortText;
+        fullTextElement.style.maxHeight = '300px'; // ограничиваем высоту
         button.textContent = 'Читать полностью';
     }
 }
