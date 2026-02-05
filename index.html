@@ -254,39 +254,31 @@
             }
 
             const newsHTML = news.map(item => {
-                // Преобразуем дату в нужный формат
                 let formattedDate = item['Дата'] || 'Дата не указана';
-
-                // Если дата в формате YYYY-MM-DD, преобразуем в DD.MM.YYYY
                 if (formattedDate.includes('-')) {
                     const dateParts = formattedDate.split('-');
                     formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
                 }
 
-                // Получаем URL изображения (если есть)
                 const imageUrl = item['Изображение (URL)'] || '';
-
-                // Формируем HTML для новости (с изображением или без)
-                let imageHtml = '';
-                if (imageUrl) {
-                    imageHtml = `<div class="news-image"><img src="${imageUrl}" alt="${item['Заголовок'] || 'Новость'}"></div>`;
-                }
+                const imageHtml = imageUrl
+                    ? `<div class="news-image"><img src="${imageUrl}" alt="${item['Заголовок'] || 'Новость'}" loading="lazy"></div>`
+                    : '';
 
                 return `
-            <div class="news-card">
-                ${imageHtml}
-                <div class="news-content">
-                    <div class="news-date">${formattedDate}</div>
-                    <h3>${item['Заголовок'] || 'Без заголовка'}</h3>
-                    <p>${item['Текст новости'] || ''}</p>
-                </div>
-            </div>
-        `;
+                    <div class="news-card">
+                        ${imageHtml}
+                        <div class="news-content">
+                            <div class="news-date">${formattedDate}</div>
+                            <h3>${item['Заголовок'] || 'Без заголовка'}</h3>
+                            <p>${item['Текст новости'] || ''}</p>
+                        </div>
+                    </div>
+                `;
             }).join('');
 
             container.innerHTML = newsHTML;
         }
-
         // Загружаем новости при загрузке страницы
         document.addEventListener('DOMContentLoaded', loadNews);
 
