@@ -243,8 +243,6 @@
             return result;
         }
 
-        // Функция для отображения новостей
-        // Функция для отображения новостей (с изображениями)
         function displayNews(news) {
             const container = document.getElementById('news-container');
 
@@ -254,15 +252,20 @@
             }
 
             const newsHTML = news.map(item => {
+                // Преобразуем дату
                 let formattedDate = item['Дата'] || 'Дата не указана';
                 if (formattedDate.includes('-')) {
                     const dateParts = formattedDate.split('-');
                     formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
                 }
 
+                // Получаем URL изображения
                 const imageUrl = item['Изображение (URL)'] || '';
-                const imageHtml = imageUrl
-                    ? `<div class="news-image"><img src="${imageUrl}" alt="${item['Заголовок'] || 'Новость'}" loading="lazy"></div>`
+                const hasImage = !!imageUrl; // проверяем, есть ли изображение
+
+                // Формируем HTML
+                const imageHtml = hasImage
+                    ? `<div class="news-image"><img src="${imageUrl.trim()}" alt="${item['Заголовок'] || 'Новость'}" onerror="this.style.display='none'; this.parentElement.style.display='none';"></div>`
                     : '';
 
                 return `
