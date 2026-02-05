@@ -1036,3 +1036,111 @@ h6 {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
 }
+
+/* --- УВЕЛИЧЕННЫЕ ПЛАШКИ НОВОСТЕЙ --- */
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    /* увеличили минимальную ширину */
+    gap: 30px;
+    /* увеличили отступы между карточками */
+}
+
+.news-card {
+    background: var(--white);
+    border-radius: 12px;
+    /* увеличили скругления */
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: auto;
+    /* позволяем карточке расти по высоте */
+    display: flex;
+    flex-direction: column;
+    /* карточка растягивается по содержимому */
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.news-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    /* увеличили высоту изображения */
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* изображение заполняет всю область */
+    display: block;
+}
+
+.news-content {
+    padding: 25px;
+    /* увеличили внутренние отступы */
+    flex-grow: 1;
+    /* контент занимает всё свободное место */
+}
+
+.news-date {
+    color: var(--secondary-color);
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    /* увеличили размер даты */
+}
+
+.news-card h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.6rem;
+    /* увеличили заголовок */
+    font-weight: 700;
+    line-height: 1.4;
+    /* плотнее прижали строки заголовка */
+}
+
+.news-card p {
+    margin: 0;
+    line-height: 1.7;
+    /* увеличили межстрочный интервал */
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    /* увеличили основной текст */
+    flex-grow: 1;
+    /* текст занимает всё свободное место */
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .news-grid {
+        grid-template-columns: 1fr;
+        /* на мобильных — одна колонка */
+    }
+
+    .news-image {
+        height: 200px;
+        /* уменьшаем высоту на мобильных */
+    }
+
+    .news-content {
+        padding: 20px;
+    }
+
+    .news-date {
+        font-size: 1rem;
+    }
+
+    .news-card h3 {
+        font-size: 1.4rem;
+    }
+
+    .news-card p {
+        font-size: 1.1rem;
+    }
+}
