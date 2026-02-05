@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Никольский музейный комплекс (НИКМК) | Главная</title>
     <!-- ИСПРАВЛЕНО: удалены пробелы -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -244,6 +244,7 @@
         }
 
         // Функция для отображения новостей
+        // Функция для отображения новостей (с изображениями)
         function displayNews(news) {
             const container = document.getElementById('news-container');
 
@@ -262,13 +263,25 @@
                     formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
                 }
 
+                // Получаем URL изображения (если есть)
+                const imageUrl = item['Изображение (URL)'] || '';
+
+                // Формируем HTML для новости (с изображением или без)
+                let imageHtml = '';
+                if (imageUrl) {
+                    imageHtml = `<div class="news-image"><img src="${imageUrl}" alt="${item['Заголовок'] || 'Новость'}"></div>`;
+                }
+
                 return `
-                    <div class="news-card">
-                        <div class="news-date">${formattedDate}</div>
-                        <h3>${item['Заголовок'] || 'Без заголовка'}</h3>
-                        <p>${item['Текст новости'] || ''}</p>
-                    </div>
-                `;
+            <div class="news-card">
+                ${imageHtml}
+                <div class="news-content">
+                    <div class="news-date">${formattedDate}</div>
+                    <h3>${item['Заголовок'] || 'Без заголовка'}</h3>
+                    <p>${item['Текст новости'] || ''}</p>
+                </div>
+            </div>
+        `;
             }).join('');
 
             container.innerHTML = newsHTML;
@@ -281,9 +294,7 @@
         setInterval(loadNews, 300000);
     </script>
 
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
-
-
