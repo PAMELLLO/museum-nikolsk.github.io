@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <!-- Шапка сайта -->
     <header class="header">
@@ -34,7 +30,7 @@
                 </nav>
                 <button class="menu-toggle">☰</button>
             </div>
-
+            
             <div class="hero">
                 <div class="hero-content">
                     <h2>История Никольска глазами музея</h2>
@@ -68,8 +64,7 @@
                 <div class="exhibitions-grid">
                     <div class="exhibition-card">
                         <div class="exhibition-image">
-                            <img src="https://via.placeholder.com/400x300/4a6fa5/ffffff?text=История+Никольска"
-                                alt="История Никольска">
+                            <img src="https://via.placeholder.com/400x300/4a6fa5/ffffff?text=История+Никольска" alt="История Никольска">
                         </div>
                         <div class="exhibition-info">
                             <h3>История Никольска с древности</h3>
@@ -78,11 +73,10 @@
                             <a href="exhibitions.html" class="btn-link">Подробнее →</a>
                         </div>
                     </div>
-
+                    
                     <div class="exhibition-card">
                         <div class="exhibition-image">
-                            <img src="https://via.placeholder.com/400x300/6b8e23/ffffff?text=Природа+Пензы"
-                                alt="Природа Пензенской области">
+                            <img src="https://via.placeholder.com/400x300/6b8e23/ffffff?text=Природа+Пензы" alt="Природа Пензенской области">
                         </div>
                         <div class="exhibition-info">
                             <h3>Природа Пензенской области</h3>
@@ -91,11 +85,10 @@
                             <a href="exhibitions.html" class="btn-link">Подробнее →</a>
                         </div>
                     </div>
-
+                    
                     <div class="exhibition-card">
                         <div class="exhibition-image">
-                            <img src="https://via.placeholder.com/400x300/8b4513/ffffff?text=Народы+края"
-                                alt="Народы Пензенского края">
+                            <img src="https://via.placeholder.com/400x300/8b4513/ffffff?text=Народы+края" alt="Народы Пензенского края">
                         </div>
                         <div class="exhibition-info">
                             <h3>Народы Пензенского края</h3>
@@ -145,14 +138,11 @@
                 <h2 class="section-title">Как нас найти</h2>
                 <div class="city-info">
                     <div class="city-description">
-                        <p><strong>Никольский музейный комплекс (НИКМК)</strong> расположен в центре города Никольск на
-                            Ульяновской улице, 6Б.</p>
-
-                        <p>Музей находится в исторической части города, недалеко от железнодорожной станции. Здание
-                            музея легко узнать по характерной архитектуре и вывеске.</p>
-
-                        <p>Рядом с музеем расположены остановки общественного транспорта, парковка для автомобилей и
-                            велосипедные стойки.</p>
+                        <p><strong>Никольский музейный комплекс (НИКМК)</strong> расположен в центре города Никольск на Ульяновской улице, 6Б.</p>
+                        
+                        <p>Музей находится в исторической части города, недалеко от железнодорожной станции. Здание музея легко узнать по характерной архитектуре и вывеске.</p>
+                        
+                        <p>Рядом с музеем расположены остановки общественного транспорта, парковка для автомобилей и велосипедные стойки.</p>
                     </div>
                     <div class="city-map">
                         <!-- Яндекс Карта -->
@@ -191,9 +181,8 @@
     </footer>
 
     <!-- Скрипт для Яндекс Карт -->
-    <script type="text/javascript" charset="utf-8" async
-        src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0dd916c8a4ef44d6e717988567196bc8cb151cd68805d6b2f8d9a3f9fb2c0247&amp;width=100%&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
-
+    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0dd916c8a4ef44d6e717988567196bc8cb151cd68805d6b2f8d9a3f9fb2c0247&amp;width=100%&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+    
     <script>
         // Загрузка новостей из Google Таблицы
         async function loadNews() {
@@ -201,19 +190,19 @@
                 // ID вашей таблицы (берётся из URL таблицы)
                 const spreadsheetId = '19MFPSy-RnJQstAQKus5RX4fKrctfZZWC8gM6C-oX1IQ';
                 const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv`;
-
+                
                 const response = await fetch(url);
                 const text = await response.text();
-
+                
                 // Парсим CSV
                 const news = parseCSV(text);
-
+                
                 // Отображаем новости
                 displayNews(news);
-
+                
             } catch (error) {
                 console.error('Ошибка загрузки новостей:', error);
-                document.getElementById('news-container').innerHTML =
+                document.getElementById('news-container').innerHTML = 
                     '<div class="error-message">Не удалось загрузить новости</div>';
             }
         }
@@ -223,54 +212,56 @@
             const lines = csvText.trim().split('\n');
             const headers = lines[0].split(',').map(h => h.trim());
             const result = [];
-
+            
             for (let i = 1; i < lines.length; i++) {
                 const values = lines[i].split(',');
                 const item = {};
-
+                
                 for (let j = 0; j < headers.length && j < values.length; j++) {
                     // Убираем кавычки с начала и конца
                     item[headers[j]] = values[j].trim().replace(/^"|"$/g, '');
                 }
-
+                
                 if (item['Заголовок']) {
                     result.push(item);
                 }
             }
-
+            
             return result;
         }
 
         // Отображение новостей
         function displayNews(news) {
             const container = document.getElementById('news-container');
-
+            
             if (news.length === 0) {
                 container.innerHTML = '<div class="no-news-message">Новостей пока нет</div>';
                 return;
             }
-
+            
             const newsHTML = news.map(item => {
                 // Формат даты (если в формате ДД.ММ.ГГГГ)
                 const date = item['Дата'] || 'Без даты';
-
+                
                 // Текст новости
                 const fullText = item['Текст новости'] || 'Без текста';
-
+                
                 // Проверяем, нужно ли сворачивать текст
                 const maxLength = 300; // максимальная длина текста до сворачивания
                 const isLong = fullText.length > maxLength;
                 const displayText = isLong ? fullText.substring(0, maxLength) + '...' : fullText;
-
+                
                 // Изображение (если есть)
                 const image = item['Изображение (URL)'] || '';
-
+                
                 return `
                     <div class="news-card">
                         ${image ? `<img src="${image}" alt="${item['Заголовок']}" class="news-image">` : ''}
                         <div class="news-content">
-                            <div class="news-date">${date}</div>
-                            <h3>${item['Заголовок']}</h3>
+                            <div class="news-header">
+                                <div class="news-date">${date}</div>
+                                <h3 class="news-title">${item['Заголовок']}</h3>
+                            </div>
                             <div class="news-text" id="text-${item['Заголовок'].substring(0, 10)}">
                                 ${displayText}
                             </div>
@@ -283,7 +274,7 @@
                     </div>
                 `;
             }).join('');
-
+            
             container.innerHTML = newsHTML;
         }
 
@@ -291,7 +282,7 @@
         function toggleText(elementId, fullText) {
             const textElement = document.getElementById(elementId);
             const button = event.target;
-
+            
             if (button.textContent === 'Читать полностью') {
                 textElement.innerHTML = fullText;
                 button.textContent = 'Свернуть';
@@ -305,8 +296,7 @@
         // Загружаем новости при загрузке страницы
         document.addEventListener('DOMContentLoaded', loadNews);
     </script>
-
+    
     <script src="js/script.js"></script>
 </body>
-
 </html>
