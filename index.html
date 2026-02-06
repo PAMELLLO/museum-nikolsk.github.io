@@ -37,7 +37,7 @@
 
             <div class="hero">
                 <div class="hero-content">
-                    <h2>История Никольска глазами предков</h2>
+                    <h2>История Никольска глазами музея</h2>
                     <p>Уникальные экспонаты, рассказывающие о прошлом нашего родного края</p>
                     <div class="hero-buttons">
                         <a href="exhibitions.html" class="btn btn-primary">Текущие выставки</a>
@@ -50,19 +50,13 @@
 
     <!-- Основной контент -->
     <main>
-        <!-- Новости (слайдер) -->
+        <!-- Новости (динамический блок) -->
         <section class="section" id="news-section">
             <div class="container">
                 <h2 class="section-title">Новости музея</h2>
-
-                <!-- Основная новость -->
-                <div class="main-news" id="main-news">
-                    <div class="news-loading">Загрузка главной новости...</div>
-                </div>
-
-                <!-- Лента новостей -->
-                <div class="news-feed" id="news-feed">
-                    <div class="news-loading">Загрузка новостей...</div>
+                <div class="news-grid" id="news-container">
+                    <!-- Новости будут загружены здесь -->
+                    <div class="loading-message">Загрузка новостей...</div>
                 </div>
             </div>
         </section>
@@ -122,8 +116,8 @@
                     <div class="info-item">
                         <div class="info-icon">🕒</div>
                         <h3>Режим работы</h3>
-                        <p>Ср-Вс: 10:00 - 17:00</p>
-                        <p>Пн-Вт: выходной</p>
+                        <p>Вт-Вс: 10:00 - 17:00</p>
+                        <p>Пн: выходной</p>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">💰</div>
@@ -161,9 +155,8 @@
                             велосипедные стойки.</p>
                     </div>
                     <div class="city-map">
-                        <iframe
-                            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0dd916c8a4ef44d6e717988567196bc8cb151cd68805d6b2f8d9a3f9fb2c0247&amp;width=100%&amp;height=400&amp;lang=ru_RU&amp;scroll=true"
-                            width="100%" height="400" frameborder="0"></iframe>
+                        <!-- Яндекс Карта -->
+                        <div id="map" style="width: 100%; height: 400px; background: #e0e0e0;"></div>
                     </div>
                 </div>
             </div>
@@ -175,7 +168,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>🏛️ Никольский музейный комплекс (НИКМК)</h3>
+                    <h3>🏛️ Краеведческий музей Никольска</h3>
                     <p>Сохраняем историю Пензенского края для будущих поколений</p>
                 </div>
                 <div class="footer-col">
@@ -192,140 +185,100 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 Никольский музейный комплекс (НИКМК). Все права защищены.</p>
+                <p>© 2026 Краеведческий музей Никольска. Все права защищены.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Глобальные переменные
-        let newsData = [];
-        let currentMainIndex = 0;
+    <!-- Скрипт для Яндекс Карт -->
+    <script type="text/javascript" charset="utf-8" async
+        src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0dd916c8a4ef44d6e717988567196bc8cb151cd68805d6b2f8d9a3f9fb2c0247&amp;width=100%&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
 
-        // Загрузка новостей из Google Sheets
+    <script>
+        // Загрузка новостей из Google Таблицы
         async function loadNews() {
             try {
-                const response = await fetch('https://docs.google.com/spreadsheets/d/19MFPSy-RnJQstAQKus5RX4fKrctfZZWC8gM6C-oX1IQ/export?format=csv');
+                // ID вашей таблицы (берётся из URL таблицы)
+                const spreadsheetId = '19MFPSy-RnJQstAQKus5RX4fKrctfZZWC8gM6C-oX1IQ';
+                const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=csv`;
+
+                const response = await fetch(url);
                 const text = await response.text();
 
-                // Парсинг CSV
+                // Парсим CSV
                 const news = parseCSV(text);
-                newsData = news;
 
-                // Отображение главной новости
-                if (news.length > 0) {
-                    currentMainIndex = 0;
-                    displayMainNews(news[0]);
-                }
-
-                // Отображение ленты новостей
-                displayNewsFeed(news.slice(1));
+                // Отображаем новости
+                displayNews(news);
 
             } catch (error) {
                 console.error('Ошибка загрузки новостей:', error);
-                document.getElementById('main-news').innerHTML = '<div class="error-message">Не удалось загрузить новости</div>';
-                document.getElementById('news-feed').innerHTML = '<div class="error-message">Не удалось загрузить новости</div>';
+                document.getElementById('news-container').innerHTML =
+                    '<div class="error-message">Не удалось загрузить новости</div>';
             }
         }
 
-        // Парсинг CSV (улучшенный для переносов строк)
+        // Парсинг CSV (упрощённый)
         function parseCSV(csvText) {
-            const lines = [];
-            let current = '';
-            let inQuotes = false;
-
-            for (let i = 0; i < csvText.length; i++) {
-                const char = csvText[i];
-                if (char === '"' && csvText[i - 1] !== '\\') {
-                    inQuotes = !inQuotes;
-                } else if (char === '\n' && !inQuotes) {
-                    lines.push(current);
-                    current = '';
-                    continue;
-                }
-                current += char;
-            }
-            if (current) lines.push(current);
-
-            const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
             const result = [];
 
             for (let i = 1; i < lines.length; i++) {
-                const values = parseCSVLine(lines[i]);
-                const obj = {};
+                const values = lines[i].split(',');
+                const item = {};
+
                 for (let j = 0; j < headers.length && j < values.length; j++) {
-                    obj[headers[j]] = values[j].replace(/^"|"$/g, '');
+                    // Убираем кавычки с начала и конца
+                    item[headers[j]] = values[j].trim().replace(/^"|"$/g, '');
                 }
-                if (obj['Заголовок']) {
-                    result.push(obj);
+
+                if (item['Заголовок']) {
+                    result.push(item);
                 }
             }
+
             return result;
         }
 
-        function parseCSVLine(line) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
+        // Отображение новостей
+        function displayNews(news) {
+            const container = document.getElementById('news-container');
 
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current);
-                    current = '';
-                } else {
-                    current += char;
-                }
-            }
-            result.push(current);
-            return result;
-        }
-
-        // Отображение главной новости
-        function displayMainNews(newsItem) {
-            const container = document.getElementById('main-news');
-
-            const imageUrl = newsItem['Изображение (URL)'] || '';
-            const fullText = newsItem['Текст новости'] || '';
-            const truncatedText = fullText.length > 500 ? fullText.substring(0, 500) + '...' : fullText;
-
-            container.innerHTML = `
-                <div class="main-news-card">
-                    ${imageUrl ? `<div class="main-news-image"><img src="${imageUrl}" alt="${newsItem['Заголовок']}"></div>` : ''}
-                    <div class="main-news-content">
-                        <div class="main-news-date">${newsItem['Дата'] || 'Без даты'}</div>
-                        <h3 class="main-news-title">${newsItem['Заголовок']}</h3>
-                        <p class="main-news-text">${truncatedText}</p>
-                        ${fullText.length > 500 ? `<button class="read-more-btn" onclick="toggleFullText(this, '${fullText}')">Читать полностью</button>` : ''}
-                    </div>
-                </div>
-            `;
-        }
-
-        // Отображение ленты новостей
-        function displayNewsFeed(newsItems) {
-            const container = document.getElementById('news-feed');
-
-            if (newsItems.length === 0) {
-                container.innerHTML = '<div class="no-news">Новостей пока нет</div>';
+            if (news.length === 0) {
+                container.innerHTML = '<div class="no-news-message">Новостей пока нет</div>';
                 return;
             }
 
-            const newsHTML = newsItems.map(item => {
-                const imageUrl = item['Изображение (URL)'] || '';
-                const fullText = item['Текст новости'] || '';
-                const truncatedText = fullText.length > 200 ? fullText.substring(0, 200) + '...' : fullText;
+            const newsHTML = news.map(item => {
+                // Формат даты (если в формате ДД.ММ.ГГГГ)
+                const date = item['Дата'] || 'Без даты';
+
+                // Текст новости
+                const fullText = item['Текст новости'] || 'Без текста';
+
+                // Проверяем, нужно ли сворачивать текст
+                const maxLength = 300; // максимальная длина текста до сворачивания
+                const isLong = fullText.length > maxLength;
+                const displayText = isLong ? fullText.substring(0, maxLength) + '...' : fullText;
+
+                // Изображение (если есть)
+                const image = item['Изображение (URL)'] || '';
 
                 return `
-                    <div class="news-item">
-                        ${imageUrl ? `<div class="news-item-image"><img src="${imageUrl}" alt="${item['Заголовок']}"></div>` : ''}
-                        <div class="news-item-content">
-                            <div class="news-item-date">${item['Дата'] || 'Без даты'}</div>
-                            <h4 class="news-item-title">${item['Заголовок']}</h4>
-                            <p class="news-item-text">${truncatedText}</p>
-                            ${fullText.length > 200 ? `<button class="read-more-btn small" onclick="toggleFullText(this, '${fullText}')">Читать полностью</button>` : ''}
+                    <div class="news-card">
+                        ${image ? `<img src="${image}" alt="${item['Заголовок']}" class="news-image">` : ''}
+                        <div class="news-content">
+                            <div class="news-date">${date}</div>
+                            <h3>${item['Заголовок']}</h3>
+                            <div class="news-text" id="text-${item['Заголовок'].substring(0, 10)}">
+                                ${displayText}
+                            </div>
+                            ${isLong ? `
+                                <button class="toggle-btn" onclick="toggleText('text-${item['Заголовок'].substring(0, 10)}', \`${fullText}\`)">
+                                    Читать полностью
+                                </button>
+                            ` : ''}
                         </div>
                     </div>
                 `;
@@ -334,20 +287,22 @@
             container.innerHTML = newsHTML;
         }
 
-        // Функция для разворота текста
-        function toggleFullText(button, fullText) {
-            const textElement = button.previousElementSibling;
+        // Функция для сворачивания/разворачивания текста
+        function toggleText(elementId, fullText) {
+            const textElement = document.getElementById(elementId);
+            const button = event.target;
+
             if (button.textContent === 'Читать полностью') {
                 textElement.innerHTML = fullText;
                 button.textContent = 'Свернуть';
             } else {
-                const truncated = fullText.length > 200 ? fullText.substring(0, 200) + '...' : fullText;
+                const truncated = fullText.substring(0, 300) + '...';
                 textElement.innerHTML = truncated;
                 button.textContent = 'Читать полностью';
             }
         }
 
-        // Загрузка при загрузке страницы
+        // Загружаем новости при загрузке страницы
         document.addEventListener('DOMContentLoaded', loadNews);
     </script>
 
